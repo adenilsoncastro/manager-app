@@ -2,9 +2,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Component } from '@angular/core';
 import { Storage } from "@ionic/storage";
 import { IonicPage, NavController, ToastController, NavParams, LoadingController } from 'ionic-angular';
-
-import { User } from '../../providers';
-import { MainPage } from '../';
 import { LoginModel } from '../../models/login-model';
 import { LoginProvider } from '../../providers/login-provider';
 
@@ -48,6 +45,7 @@ export class LoginPage {
             position: 'bottom'
           }).present();
         });
+        loading.dismiss();
         return;
       }
 
