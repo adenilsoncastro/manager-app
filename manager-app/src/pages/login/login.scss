@@ -1,2 +1,91 @@
 page-login {
+    .scroll-content{
+        padding-bottom: 0px !important;
+    }
+
+    .box-login{
+        display: table;
+        height: 100%;
+        width: 100%;
+        background: url('../assets/imgs/bg1.gif') repeat transparent;
+        background-size: cover;
+    }
+    .logo-row{
+        margin-bottom: 30px;
+    }
+    .img-container{
+        width: 100%;
+        text-align: center;
+        background: none;
+        
+        .img-ion{
+            width:80px;
+            height:80px;
+            background: none;
+        }
+    }
+    .login-form-container{
+        width: 100%;
+        margin: 0 auto;   
+        padding: 10px;
+        display: table-cell;
+        vertical-align: middle;
+        
+    }
+    .list-login-form{
+        width: 100%;
+        text-align: center;
+    }
+
+    .login-input {
+        border-radius: 10px !important;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        border: 1px solid #fff;
+        border-bottom-color: #fff !important;
+        box-shadow: none !important;  
+        color: #fff;
+
+        .item-inner{
+            border-bottom: 0px !important;
+            box-shadow: none !important;
+            text-align: center;
+
+            .input-field{
+                .text-input{
+                    text-align: center;
+                }
+            }
+            
+        }          
+    }
+
+    .label{
+        color:#fff !important;
+    }
+
+    .item-md{
+        padding-left: 0;
+        background: none !important;
+    }
+    .button-login{
+        border-radius: 10px;
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        height: 45px;
+        background:linear-gradient(to right, #03effe, #4eadfe);
+    }
+    .button-register{
+        border-radius: 10px;
+        display: block;
+        margin: 0 auto;
+        margin-top: 10px;
+        padding: 12px;
+        white-space: normal;
+        width: 100%;
+        height: 45px;
+        background:linear-gradient(to right, #03effe, #4eadfe);
+    }
+
 }

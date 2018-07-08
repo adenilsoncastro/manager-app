@@ -1,50 +1,103 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { Storage } from "@ionic/storage";
+import { IonicPage, NavController, ToastController, NavParams, LoadingController } from 'ionic-angular';
 
 import { User } from '../../providers';
 import { MainPage } from '../';
+import { LoginModel } from '../../models/login-model';
+import { LoginProvider } from '../../providers/login-provider';
 
 @IonicPage()
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html'
+  templateUrl: 'login.html',
+  providers: [LoginProvider]
 })
 export class LoginPage {
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
-  account: { email: string, password: string } = {
-    email: 'test@example.com',
-    password: 'test'
-  };
-
-  // Our translated text strings
-  private loginErrorString: string;
-
   constructor(public navCtrl: NavController,
-    public user: User,
-    public toastCtrl: ToastController,
-    public translateService: TranslateService) {
+    public navParams: NavParams,
+    public _loginProvider: LoginProvider,
+    private _toast: ToastController,
+    private _storage: Storage,
+    private _jwtHelper: JwtHelperService,
+    public loadingCtrl: LoadingController) {
+  }
 
-    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
-      this.loginErrorString = value;
+  loginModel: LoginModel = new LoginModel();
+
+  onClick() {
+    // this.navCtrl.push(HomePage);
+  }
+
+  loginClick() {
+
+    let loading = this.loadingCtrl.create({
+      spinner: 'dots',
+      content: 'Aguarde...'
+    });
+
+    loading.present();
+
+    this._loginProvider.login(this.loginModel).subscribe(res => {
+      if (res.success == false) {
+        res.error.forEach(element => {
+          this._toast.create({
+            message: element.msg,
+            duration: 3000,
+            position: 'bottom'
+          }).present();
+        });
+        return;
+      }
+
+      const decodedToken = this._jwtHelper.decodeToken(res.token);
+      const expirationDate = this._jwtHelper.getTokenExpirationDate(res.token);
+      const isExpired = this._jwtHelper.isTokenExpired(res.token);
+
+      this.loginModel = new LoginModel();
+      this.loginModel.username = "";
+      this.loginModel.password = "";
+      this.loginModel.usertype = 1;
+      this._storage.set('token', res.token).then(() => {
+        // this.navCtrl.push(HomePage);
+      });
+      loading.dismiss();
+    }, error => {
+      console.log(error);
+
+      var errorMsg = "";
+
+      if (error.error.text) {
+        errorMsg = error.error.text;
+      } else {
+        errorMsg = error.message;
+      }
+
+      let toast = this._toast.create({
+        message: "Ocorreu um erro ao se comunicar com o servidor",
+        duration: 3000,
+        position: 'bottom'
+      });
+      loading.dismiss();
     })
   }
 
-  // Attempt to login in through our User service
-  doLogin() {
-    this.user.login(this.account).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
-    }, (err) => {
-      this.navCtrl.push(MainPage);
-      // Unable to log in
-      let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
-    });
+  registerClick() {
+    // this.navCtrl.push(RegisterPage);
+  }
+
+  isFormValid() {
+    if (!this.loginModel)
+      return false;
+
+    if (!this.loginModel.username || !this.loginModel.password)
+      return false;
+
+    return this.loginModel.username.length > 0 && this.loginModel.password.length > 0;
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad LoginPage');
   }
 }
