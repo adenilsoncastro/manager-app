@@ -1,3 +1,4 @@
+import { HomePage } from './../home/home';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Component } from '@angular/core';
 import { Storage } from "@ionic/storage";
@@ -24,7 +25,7 @@ export class LoginPage {
   loginModel: LoginModel = new LoginModel();
 
   onClick() {
-    // this.navCtrl.push(HomePage);
+    this.navCtrl.push(HomePage);
   }
 
   loginClick() {
@@ -58,7 +59,7 @@ export class LoginPage {
       this.loginModel.password = "";
       this.loginModel.usertype = 1;
       this._storage.set('token', res.token).then(() => {
-        // this.navCtrl.push(HomePage);
+        this.navCtrl.push(HomePage);
       });
       loading.dismiss();
     }, error => {
