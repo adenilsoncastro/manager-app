@@ -1,3 +1,4 @@
+import { HomePage } from './../pages/home/home';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,6 +11,7 @@ import { MyApp } from './app.component';
 import { LoginProvider } from '../providers/login-provider';
 import { JwtModule } from '../../node_modules/@auth0/angular-jwt';
 import { Api, User } from '../providers';
+import { ChartsModule } from 'ng2-charts';
 
 export function provideSettings(storage: Storage) {
 }
@@ -20,11 +22,13 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
+    HomePage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    ChartsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     JwtModule.forRoot({
@@ -37,7 +41,8 @@ export function tokenGetter() {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    MyApp,
+    HomePage
   ],
   providers: [
     Api,
