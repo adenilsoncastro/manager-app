@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>aprovar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <table class="row-border hover">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Carro</th>
+        <th>Placa</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let user of users'>
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.marca}} - {{user.modelo}}</td>
+        <td>{{user.plate}}</td>
+        <td><button (click)="aprovar(user._id)" >Aprovar</button></td>
+      </tr>
+      <tr *ngIf="users?.length == 0">
+        <td colspan="3" class="no-data-available">Nenhum usuário encontrado para aprovação!</td>
+      </tr>
+    </tbody>
+  </table>
+</ion-content>

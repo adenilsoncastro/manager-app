@@ -1,3 +1,4 @@
+import { AprovarPage } from './../aprovar/aprovar';
 import { TransitsProvider } from './../../providers/transits-provider';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -50,7 +51,6 @@ export class HomePage {
         this.lineChartData.push({ data: amountArray, label: 'total' })
 
         this.createChart = true;
-        debugger
         // setTimeout(this.chart.chart.update(), 10 * 60 * 1000);
       },
       error => {
@@ -126,5 +126,9 @@ export class HomePage {
     date.setMinutes(minutes);
     var options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }
     return date.toLocaleDateString('pt-BR', options);
+  }
+
+  aprovar() {
+    this.navCtrl.push(AprovarPage);
   }
 }

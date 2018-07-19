@@ -12,6 +12,7 @@ import { LoginProvider } from '../providers/login-provider';
 import { JwtModule } from '../../node_modules/@auth0/angular-jwt';
 import { Api, User } from '../providers';
 import { ChartsModule } from 'ng2-charts';
+import { AprovarPage } from '../pages/aprovar/aprovar';
 
 export function provideSettings(storage: Storage) {
 }
@@ -23,7 +24,8 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    AprovarPage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ export function tokenGetter() {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    AprovarPage
   ],
   providers: [
     Api,
