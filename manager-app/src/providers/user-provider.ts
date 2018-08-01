@@ -29,18 +29,25 @@ export class UserProvider extends BaseProvider {
         });
     }
 
+    listApproved() {
+        return this.getAuthHeaders().flatMap(api_token => {
+            const headers = new HttpHeaders({
+                'Content-Type': 'application/json; charset=utf-8',
+                token: api_token,
+            });
+
+            return this.http.get<any>(this.url + 'users/approved', { headers });
+        });
+    }
+
     approve(userId, approved) {
         return this.getAuthHeaders().flatMap(api_token => {
             const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
                 token: api_token,
             });
-debugger
-            let params = new HttpParams()
-                .set('userId', userId)
-                .set('approved', approved)
-
-            return this.http.post<any>(this.url + 'users/approve', userId, { headers });
+            debugger
+            return this.http.post<any>(this.url + 'users/approve', { userId: userId, approved: approved }, { headers });
         });
     }
 }

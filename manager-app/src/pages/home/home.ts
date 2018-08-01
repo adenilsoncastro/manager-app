@@ -1,7 +1,7 @@
 import { AprovarPage } from './../aprovar/aprovar';
 import { TransitsProvider } from './../../providers/transits-provider';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { BaseChartDirective } from '../../../node_modules/ng2-charts';
 
 @IonicPage()
@@ -15,6 +15,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    private _toast: ToastController,
     public _transitsProvider: TransitsProvider) {
 
     this.grafico();
@@ -54,7 +55,7 @@ export class HomePage {
         // setTimeout(this.chart.chart.update(), 10 * 60 * 1000);
       },
       error => {
-
+        this.handleErrorFromApiCall(error);
       })
   }
 
@@ -130,5 +131,22 @@ export class HomePage {
 
   aprovar() {
     this.navCtrl.push(AprovarPage);
+  }
+
+  handleErrorFromApiCall(error){
+    var errorMsg = "";
+
+    if (error.error.text) {
+      errorMsg = error.error.text;
+    } else {
+      errorMsg = error.message;
+    }
+
+    let toast = this._toast.create({
+      message: errorMsg,
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
   }
 }
