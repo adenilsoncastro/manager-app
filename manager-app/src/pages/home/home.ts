@@ -18,10 +18,34 @@ export class HomePage {
     private _toast: ToastController,
     public _transitsProvider: TransitsProvider) {
 
-    this.grafico();
+    this.graficoFrequencia();
+    this.graficoBarreira();
   }
 
-  grafico() {
+  graficoBarreira() {
+    this._transitsProvider.todaycountbybarrier().subscribe(
+      res => {
+        console.log(res);
+        debugger
+
+        for (var i = 0; i < res.data.length; i++) {
+          this.barChartData.push({data: [res.data[i].count] , label: 'Cancela ' + res.data[i]._id})          
+        }
+
+        this.createBarChart = true;
+
+        // var barChartData = [
+        //   { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+        //   { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+        // ];
+
+      },
+      error => {
+        this.handleErrorFromApiCall(error);
+      })
+  }
+
+  graficoFrequencia() {
     this._transitsProvider.getAllByToday().subscribe(
       res => {
         console.log(res);
@@ -65,8 +89,11 @@ export class HomePage {
 
   transits = [];
   createChart = false;
+  createBarChart = false;
 
-  public lineChartData = []
+  public barChartData = [];
+
+  public lineChartData = [];
   public lineChartLabels = [];
   public lineChartOptions: any = {
     scaleShowValues: true,
@@ -133,7 +160,7 @@ export class HomePage {
     this.navCtrl.push(AprovarPage);
   }
 
-  handleErrorFromApiCall(error){
+  handleErrorFromApiCall(error) {
     var errorMsg = "";
 
     if (error.error.text) {
@@ -149,4 +176,25 @@ export class HomePage {
     });
     toast.present();
   }
+
+  // public barChartOptions: any = {
+  //   scaleShowVerticalLines: false,
+  //   responsive: true,
+  // };
+
+  public barChartOptions:any = {
+    scaleShowVerticalLines:false,
+    responsive:true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  };
+
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
+
 }

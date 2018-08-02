@@ -10,9 +10,19 @@
   <div class="row">
     <div class="col-md-6">
       <div class="chart" *ngIf="createChart" style="display: block;">
-        <canvas baseChart #baseChart="base-chart" width="300" height="400" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-          [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+        <canvas baseChart #baseChart="base-chart" width="300" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+          [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block">
+        <div class="chart" *ngIf="createBarChart" style="display: block;">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+            [chartType]="barChartType"></canvas>
+        </div>
       </div>
     </div>
   </div>
