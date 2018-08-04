@@ -64,7 +64,6 @@ export class LoginPage {
       loading.dismiss();
     }, error => {
       console.log(error);
-
       var errorMsg = "";
 
       if (error.error.text) {
@@ -77,13 +76,10 @@ export class LoginPage {
         message: "Ocorreu um erro ao se comunicar com o servidor",
         duration: 3000,
         position: 'bottom'
-      });
+      }).present();
+
       loading.dismiss();
     })
-  }
-
-  registerClick() {
-    // this.navCtrl.push(RegisterPage);
   }
 
   isFormValid() {

@@ -1,65 +1,47 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>aprovar</ion-title>
+    <ion-title>Gerenciar Usuários</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding>
-  Não aprovados
-  <table class="row-border hover">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>E-mail</th>
-        <th>Carro</th>
-        <th>Placa</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor='let unapprovedUser of unapprovedUsers'>
-        <td>{{unapprovedUser.name}}</td>
-        <td>{{unapprovedUser.email}}</td>
-        <td>{{unapprovedUser.marca}} - {{unapprovedUser.modelo}}</td>
-        <td>{{unapprovedUser.plate}}</td>
-        <td>
-          <button (click)="aprovar(unapprovedUser._id)">Aprovar</button>
-        </td>
-      </tr>
-      <tr *ngIf="unapprovedUsers?.length == 0">
-        <td colspan="3" class="no-data-available">Nenhum usuário encontrado para aprovação!</td>
-      </tr>
-    </tbody>
-  </table>
-
-
-  <table class="row-border hover">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>E-mail</th>
-        <th>Carro</th>
-        <th>Placa</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor='let approvedUser of approvedUsers'>
-        <td>{{approvedUser.name}}</td>
-        <td>{{approvedUser.email}}</td>
-        <td>{{approvedUser.marca}} - {{approvedUser.modelo}}</td>
-        <td>{{approvedUser.plate}}</td>
-        <td>
-          <button (click)="desaprovar(approvedUser._id)">Desaprovar</button>
-        </td>
-      </tr>
-      <tr *ngIf="approvedUsers?.length == 0">
-        <td colspan="3" class="no-data-available">Nenhum usuário encontrado para inativar!</td>
-      </tr>
-    </tbody>
-  </table>
-
+  <div class="users-container">
+    <div class="card-user-container" *ngFor='let unapprovedUser of unapprovedUsers'>
+      <div class="user-name-container">
+        <span class="user-name">{{unapprovedUser.name}}</span>
+      </div>
+      <div class="user-email-container">
+        <span class="user-email">{{unapprovedUser.email}}</span>
+      </div>
+      <div class="user-marca-container">
+        <span class="user-marca">{{unapprovedUser.modelo}} - {{unapprovedUser.placa}}</span>
+      </div>
+      <div class="button-container row">
+        <div class="col button-approve-container">
+          <button class="button-approve" [disabled]="unapprovedUser.approved" (click)="aprovar(unapprovedUser._id)">Aprovar</button>
+        </div>
+        <div class="col button-disapprove-container">
+          <button class="button-disapprove" [disabled]="!unapprovedUser.approved" (click)="desaprovar(approvedUser._id)">Desaprovar</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-user-container" *ngFor='let approvedUser of approvedUsers'>
+        <div class="user-name-container">
+          <span class="user-name">{{approvedUser.name}}</span>
+        </div>
+        <div class="user-email-container">
+          <span class="user-email">{{approvedUser.email}}</span>
+        </div>
+        <div class="user-marca-container">
+          <span class="user-marca">{{approvedUser.modelo}} - {{approvedUser.placa}}</span>
+        </div>
+        <div class="button-container row">
+          <div class="col button-approve-container">
+            <button class="button-approve" [disabled]="approvedUser.approved" (click)="aprovar(approvedUser._id)">Aprovar</button>
+          </div>
+          <div class="col button-disapprove-container">
+            <button class="button-disapprove" [disabled]="!approvedUser.approved" (click)="desaprovar(approvedUser._id)">Desaprovar</button>
+          </div>
+        </div>
+      </div>
+  </div>
 </ion-content>

@@ -1,22 +1,40 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>home</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
 <ion-content padding>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="chart" *ngIf="createChart" style="display: block;">
-        <canvas baseChart #baseChart="base-chart" width="300" height="400" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-          [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
+  <div class="home-container">
+    <div class="row">
+      <div class="text-top-container">
+        <div class="info-text-container">
+          <span class="info-text">Total de acessos hoje:</span>
+        </div>
+        <div class="access-number-container">
+          <span class="access-number">{{totalAccesses}}</span>
+        </div>
       </div>
     </div>
+    <div class="row">
+      <div class="chart-container">
+        <div class="chart" *ngIf="createChart" style="display: block;">
+          <canvas baseChart #baseChart="base-chart" width="300" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+            [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+            (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="row action-button-container">
+      <div class="col col-user-action">
+        <button class="button-update"  (click)="atualizar()">
+          <ion-img class="img-action-button" src="assets/imgs/refresh.png"></ion-img>
+        </button>
+      </div>
+      <div class="col col-user-action">
+        <button class="button-approve" (click)="aprovar()">
+            <ion-img class="img-action-button" src="assets/imgs/icon1.png"></ion-img>
+        </button>
+      </div>
+      <div class="col col-user-action">
+          <button class="button-logout" (click)="logout()" ion-button>
+            <ion-img class="img-action-button" src="assets/imgs/logout.png"></ion-img>
+          </button>
+        </div>
+    </div>
   </div>
-  <button (click)="atualizar()">teste</button>
-  <button (click)="aprovar()">aprovar</button>
-
 </ion-content>

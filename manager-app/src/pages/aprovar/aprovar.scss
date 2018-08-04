@@ -1,3 +1,52 @@
 page-aprovar {
-
+    .scroll-content {
+        padding: 0 !important;
+    }
+    .users-container{
+        width: 100%;
+        height: auto 100%;
+        padding: 5px 0 5px 0;
+        .card-user-container{
+            width: 95%;
+            height: auto;
+            margin: 0 auto;
+            margin-bottom: 5px;
+            background-color: #e4e4e4;
+            border: 1px gray;
+            border-radius: 5px;
+            font-size: 15px;    
+            display: table;
+            padding: 5px;     
+            .user-name-container{
+                margin-top: 0 !important;
+            }   
+            .user-name-container,.user-email-container, .user-marca-container{
+                margin: 5px 0 5px 0;
+                .user-name{
+                    font-weight: bold;
+                }
+            }
+            .button-container{                
+                .button-approve-container,.button-disapprove-container{   
+                    text-align: center;
+                    padding: 0;
+                    height: 30px;;                 
+                    .button-approve{
+                        background-color: #5c6066;                        
+                    }
+                    .button-disapprove{
+                        background-color: #5c6066;
+                    }
+                    .button-approve, .button-disapprove{
+                        font-size: 15px;
+                        font-weight: bold;
+                        border-radius: 5px;
+                        width: 80%;
+                        height: 100%;
+                        margin: 0 auto;
+                    }
+                }                
+            }
+        }
+    }
 }

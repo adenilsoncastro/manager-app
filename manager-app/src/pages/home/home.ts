@@ -1,7 +1,7 @@
 import { AprovarPage } from './../aprovar/aprovar';
 import { TransitsProvider } from './../../providers/transits-provider';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { BaseChartDirective } from '../../../node_modules/ng2-charts';
 
 @IonicPage()
@@ -16,12 +16,21 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private _toast: ToastController,
-    public _transitsProvider: TransitsProvider) {
+    public _transitsProvider: TransitsProvider,
+    public loadingCtrl: LoadingController) {
 
     this.grafico();
   }
 
+  totalAccesses = 0;
+
   grafico() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'dots',
+      content: 'Carregando...'
+    });
+    loading.present();
+
     this._transitsProvider.getAllByToday().subscribe(
       res => {
         console.log(res);
@@ -37,10 +46,11 @@ export class HomePage {
             this.transits[j]._id.dayOfYear,
             this.transits[j]._id.hour,
             this.transits[j]._id.interval)
-
+          
           chartData.push({ date: this.transits[j]._id.builtDate, amount: this.transits[j].count })
+          this.totalAccesses += this.transits[j].count;
         }
-
+        
         chartData.sort(function (a, b) {
           return a.date < b.date ? -1 : 1
         })
@@ -53,14 +63,20 @@ export class HomePage {
 
         this.createChart = true;
         // setTimeout(this.chart.chart.update(), 10 * 60 * 1000);
+        loading.dismiss();
       },
       error => {
+        loading.dismiss();
         this.handleErrorFromApiCall(error);
       })
   }
 
   atualizar() {
     this.chart.chart.update();
+  }
+
+  logout() {
+    this.navCtrl.pop();
   }
 
   transits = [];

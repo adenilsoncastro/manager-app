@@ -1,6 +1,6 @@
 import { UserProvider } from './../../providers/user-provider';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -13,7 +13,8 @@ export class AprovarPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private _toast: ToastController,
-    public _userProvider: UserProvider) {
+    public _userProvider: UserProvider,
+    public loadingCtrl: LoadingController) {
   }
 
   unapprovedUsers = [];
@@ -24,22 +25,31 @@ export class AprovarPage {
   }
 
   loadUsers() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'dots',
+      content: 'Carregando...'
+    });
+    loading.present();
+
     this._userProvider.listUnapproved().subscribe(
       res => {
         this.unapprovedUsers = res.users;
+        this._userProvider.listApproved().subscribe(
+          res => {
+            loading.dismiss();
+            this.approvedUsers = res.users;
+            console.log(this.approvedUsers)
+          }, error => {
+            loading.dismiss();
+            this.handleErrorFromApiCall(error);
+          }
+        ) 
       }, error => {
+        loading.dismiss();
         this.handleErrorFromApiCall(error);
       }
-    )
-
-    this._userProvider.listApproved().subscribe(
-      res => {
-        this.approvedUsers = res.users;
-        console.log(this.approvedUsers)
-      }, error => {
-        this.handleErrorFromApiCall(error);
-      }
-    )
+    )      
+    
   }
 
   aprovar(id) {
