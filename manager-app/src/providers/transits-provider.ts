@@ -58,4 +58,16 @@ export class TransitsProvider extends BaseProvider {
             return this.http.get<any>(this.url + 'transits/getallbytoday', { headers });
         });
     }
+
+    todaycountbybarrier() {
+
+        return this.getAuthHeaders().flatMap(api_token => {
+            const headers = new HttpHeaders({
+                'Content-Type': 'application/json; charset=utf-8',
+                token: api_token,
+            });
+            
+            return this.http.get<any>(this.url + 'transits/todaycountbybarrier', { headers });
+        });
+    }
 }

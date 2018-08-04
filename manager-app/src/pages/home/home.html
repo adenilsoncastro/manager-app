@@ -19,22 +19,34 @@
         </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div style="display: block">
+          <div class="chart" *ngIf="createBarChart" style="display: block;">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+              [chartType]="barChartType"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row action-button-container">
       <div class="col col-user-action">
-        <button class="button-update"  (click)="atualizar()">
+        <button class="button-update" (click)="atualizar()">
           <ion-img class="img-action-button" src="assets/imgs/refresh.png"></ion-img>
         </button>
       </div>
       <div class="col col-user-action">
         <button class="button-approve" (click)="aprovar()">
-            <ion-img class="img-action-button" src="assets/imgs/icon1.png"></ion-img>
+          <ion-img class="img-action-button" src="assets/imgs/icon1.png"></ion-img>
         </button>
       </div>
       <div class="col col-user-action">
-          <button class="button-logout" (click)="logout()" ion-button>
-            <ion-img class="img-action-button" src="assets/imgs/logout.png"></ion-img>
-          </button>
-        </div>
+        <button class="button-logout" (click)="logout()" ion-button>
+          <ion-img class="img-action-button" src="assets/imgs/logout.png"></ion-img>
+        </button>
+      </div>
     </div>
   </div>
 </ion-content>
