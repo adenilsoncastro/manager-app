@@ -29,7 +29,6 @@ export class HomePage {
     this._transitsProvider.todaycountbybarrier().subscribe(
       res => {
         console.log(res);
-        debugger
 
         for (var i = 0; i < res.data.length; i++) {
           this.barChartData.push({data: [res.data[i].count] , label: 'Cancela ' + res.data[i]._id})          
@@ -81,10 +80,8 @@ export class HomePage {
 
         this.createChart = true;
         // setTimeout(this.chart.chart.update(), 10 * 60 * 1000);
-        loading.dismiss();
       },
       error => {
-        loading.dismiss();
         this.handleErrorFromApiCall(error);
       })
   }

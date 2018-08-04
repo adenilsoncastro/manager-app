@@ -3,7 +3,7 @@
     <div class="row">
       <div class="text-top-container">
         <div class="info-text-container">
-          <span class="info-text">Total de acessos hoje:</span>
+          <span class="info-text">Total de acessos nas últimas 24h:</span>
         </div>
         <div class="access-number-container">
           <span class="access-number">{{totalAccesses}}</span>
@@ -17,20 +17,12 @@
             [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
             (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
         </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <div style="display: block">
-          <div class="chart" *ngIf="createBarChart" style="display: block;">
-            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-              [chartType]="barChartType"></canvas>
-          </div>
+        <div class="bar-chart" *ngIf="createBarChart" style="display: block;">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+            [chartType]="barChartType"></canvas>
         </div>
       </div>
     </div>
-
     <div class="row action-button-container">
       <div class="col col-user-action">
         <button class="button-update" (click)="atualizar()">
