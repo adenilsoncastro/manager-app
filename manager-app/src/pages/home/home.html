@@ -13,7 +13,7 @@
     <div class="row">
       <div class="chart-container">
         <div class="chart" *ngIf="createChart" style="display: block;">
-          <canvas baseChart #baseChart="base-chart" width="300" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+          <canvas baseChart #baseChart="base-chart" width="300" height="300" [datasets]="lineChartData" [labels]="lineChartLabels"
             [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
             (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
         </div>

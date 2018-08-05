@@ -21,9 +21,14 @@ export class HomePage {
 
     this.graficoFrequencia();
     this.graficoBarreira();
+
+    setInterval(() => { this.atualizar() }, 0.5 * 60 * 1000);
   }
 
+  public barChartData = [];
+  public lineChartData = [];
   totalAccesses = 0;
+  lineChartDataMax = 0;
 
   graficoBarreira() {
     this._transitsProvider.todaycountbybarrier().subscribe(
@@ -31,16 +36,10 @@ export class HomePage {
         console.log(res);
 
         for (var i = 0; i < res.data.length; i++) {
-          this.barChartData.push({data: [res.data[i].count] , label: 'Cancela ' + res.data[i]._id})          
+          this.barChartData.push({ data: [res.data[i].count], label: 'Cancela ' + res.data[i]._id })
         }
 
         this.createBarChart = true;
-
-        // var barChartData = [
-        //   { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-        //   { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
-        // ];
-
       },
       error => {
         this.handleErrorFromApiCall(error);
@@ -48,6 +47,7 @@ export class HomePage {
   }
 
   graficoFrequencia() {
+    this.totalAccesses = 0;
     this._transitsProvider.getAllByToday().subscribe(
       res => {
         console.log(res);
@@ -63,11 +63,12 @@ export class HomePage {
             this.transits[j]._id.dayOfYear,
             this.transits[j]._id.hour,
             this.transits[j]._id.interval)
-          
+
           chartData.push({ date: this.transits[j]._id.builtDate, amount: this.transits[j].count })
           this.totalAccesses += this.transits[j].count;
         }
-        
+        this.lineChartDataMax = Math.max(...chartData.map(x => x.amount));
+
         chartData.sort(function (a, b) {
           return a.date < b.date ? -1 : 1
         })
@@ -79,7 +80,6 @@ export class HomePage {
         this.lineChartData.push({ data: amountArray, label: 'total' })
 
         this.createChart = true;
-        // setTimeout(this.chart.chart.update(), 10 * 60 * 1000);
       },
       error => {
         this.handleErrorFromApiCall(error);
@@ -87,7 +87,12 @@ export class HomePage {
   }
 
   atualizar() {
-    this.chart.chart.update();
+    this.createChart = false;
+    this.createBarChart = false;
+    this.lineChartData = [];
+    this.barChartData = [];
+    this.graficoFrequencia();
+    this.graficoBarreira();
   }
 
   logout() {
@@ -98,22 +103,27 @@ export class HomePage {
   createChart = false;
   createBarChart = false;
 
-  public barChartData = [];
-
-  public lineChartData = [];
   public lineChartLabels = [];
   public lineChartOptions: any = {
     scaleShowValues: true,
     responsive: true,
-    xAxes: [{
-      ticks: {
-        autoSkip: false,
-        maxTicksLimit: 10
-      }
-    }],
+    scales: {
+      xAxes: [{
+        ticks: {
+          autoSkip: false,
+          maxTicksLimit: 10
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          callback: function (value) { if (value % 1 === 0) { return value; } }
+        }
+      }]
+    }
   };
   public lineChartColors: Array<any> = [
-    { // grey
+    {
       backgroundColor: 'rgba(148,159,177,0.2)',
       borderColor: 'rgba(148,159,177,1)',
       pointBackgroundColor: '#03effe',
@@ -121,7 +131,7 @@ export class HomePage {
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     },
-    { // dark grey
+    {
       backgroundColor: 'rgba(77,83,96,0.2)',
       borderColor: 'rgba(77,83,96,1)',
       pointBackgroundColor: 'rgba(77,83,96,1)',
@@ -129,7 +139,7 @@ export class HomePage {
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(77,83,96,1)'
     },
-    { // grey
+    {
       backgroundColor: 'rgba(148,159,177,0.2)',
       borderColor: 'rgba(148,159,177,1)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -184,14 +194,9 @@ export class HomePage {
     toast.present();
   }
 
-  // public barChartOptions: any = {
-  //   scaleShowVerticalLines: false,
-  //   responsive: true,
-  // };
-
-  public barChartOptions:any = {
-    scaleShowVerticalLines:false,
-    responsive:true,
+  public barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: true,
     scales: {
       yAxes: [{
         ticks: {
@@ -203,5 +208,4 @@ export class HomePage {
 
   public barChartType: string = 'bar';
   public barChartLegend: boolean = true;
-
 }
