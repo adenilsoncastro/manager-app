@@ -33,13 +33,12 @@ export class HomePage {
   graficoBarreira() {
     this._transitsProvider.todaycountbybarrier().subscribe(
       res => {
-        console.log(res);
-
         for (var i = 0; i < res.data.length; i++) {
           this.barChartData.push({ data: [res.data[i].count], label: 'Cancela ' + res.data[i]._id })
         }
 
-        this.createBarChart = true;
+        if(this.barChartData.length > 0)
+          this.createBarChart = true;
       },
       error => {
         this.handleErrorFromApiCall(error);
@@ -79,7 +78,8 @@ export class HomePage {
         }
         this.lineChartData.push({ data: amountArray, label: 'total' })
 
-        this.createChart = true;
+        if(this.lineChartData.length > 0)
+          this.createChart = true;
       },
       error => {
         this.handleErrorFromApiCall(error);

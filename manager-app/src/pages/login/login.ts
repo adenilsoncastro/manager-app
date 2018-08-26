@@ -57,7 +57,7 @@ export class LoginPage {
       this.loginModel = new LoginModel();
       this.loginModel.username = "";
       this.loginModel.password = "";
-      this.loginModel.usertype = 1;
+      this.loginModel.usertype = 2;
       this._storage.set('token', res.token).then(() => {
         this.navCtrl.push(HomePage);
       });

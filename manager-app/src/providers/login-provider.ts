@@ -17,15 +17,7 @@ export class LoginProvider extends BaseProvider{
       {
         username: login.username,
         password: login.password,
-        usertype: login.usertype
+        usertype: 2
       });
   }
-  // login(login: LoginModel) {
-
-  //   return this.api.post('users/login', {
-  //     username: login.username,
-  //     password: login.password,
-  //     usertype: login.usertype
-  //   });
-  // }
 }

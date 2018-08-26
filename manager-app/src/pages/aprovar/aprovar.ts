@@ -49,7 +49,6 @@ export class AprovarPage {
         this.handleErrorFromApiCall(error);
       }
     )      
-    
   }
 
   aprovar(id) {
@@ -66,7 +65,6 @@ export class AprovarPage {
   }
 
   desaprovar(id) {
-    debugger
     this._userProvider.approve(id, false).subscribe(res => {
       this.loadUsers();
       this._toast.create({
@@ -80,14 +78,6 @@ export class AprovarPage {
   }
 
   handleErrorFromApiCall(error) {
-    var errorMsg = "";
-
-    if (error.error.text) {
-      errorMsg = error.error.text;
-    } else {
-      errorMsg = error.message;
-    }
-
     let toast = this._toast.create({
       message: "Ocorreu um erro na comunicação com o servidor",
       duration: 3000,

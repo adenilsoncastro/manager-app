@@ -33,7 +33,6 @@ export class TransitsProvider extends BaseProvider {
     }
 
     countOfToday(userId) {
-
         return this.getAuthHeaders().flatMap(api_token => {
             const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
@@ -48,7 +47,6 @@ export class TransitsProvider extends BaseProvider {
     }
 
     getAllByToday() {
-
         return this.getAuthHeaders().flatMap(api_token => {
             const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',
@@ -60,7 +58,6 @@ export class TransitsProvider extends BaseProvider {
     }
 
     todaycountbybarrier() {
-
         return this.getAuthHeaders().flatMap(api_token => {
             const headers = new HttpHeaders({
                 'Content-Type': 'application/json; charset=utf-8',

@@ -46,7 +46,6 @@ export class UserProvider extends BaseProvider {
                 'Content-Type': 'application/json; charset=utf-8',
                 token: api_token,
             });
-            debugger
             return this.http.post<any>(this.url + 'users/approve', { userId: userId, approved: approved }, { headers });
         });
     }
