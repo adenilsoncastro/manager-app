@@ -1,3 +1,5 @@
+import { HomePageModule } from './../pages/home/home.module';
+import { AprovarPageModule } from './../pages/aprovar/aprovar.module';
 import { HomePage } from './../pages/home/home';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -23,9 +25,7 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage,
-    AprovarPage
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -40,6 +40,8 @@ export function tokenGetter() {
         blacklistedRoutes: ['localhost:3001/auth/']
       }
     }),
+    HomePageModule,
+    AprovarPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
